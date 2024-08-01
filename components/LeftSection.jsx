@@ -37,20 +37,21 @@ const LeftSection = () => {
         fetchNearbyCities();
     }, [])
     return (
-        <section className='p-10 bg-white min-h-screen w-full px-[100px] flex flex-col gap-4'>
+        <section className='lg:p-10 sm:p-4 md:p-4 p-4 bg-white min-h-screen w-full lg:px-[100px] flex flex-col gap-4'>
             <NavBar
                 cityInput={cityInput}
                 fetchCities={fetchCities}
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
                 nearbyCities={nearbyCities}
+                setCityInput={setCityInput}
             />
             <div className="flex flex-col gap-2">
                 {session?.user ? (
 
-                    <h1 className="font-extralight text-5xl text-primary tracking-wider">Hello, <span className="font-semibold">{session.user.name}</span></h1>
+                    <h1 className="font-extralight lg:text-5xl text-lg sm:text-lg text-primary tracking-wider">Hello, <span className="font-semibold">{session.user.name}</span></h1>
                 ) : (
-                    <h1 className="font-extralight text-5xl text-primary tracking-wider">Weather <span className="font-semibold">Forecast</span></h1>
+                    <h1 className="font-extralight lg:text-5xl text-lg sm:text-lg md:text-lg text-primary tracking-wider">Weather <span className="font-semibold">Forecast</span></h1>
                 )}
                 <CitiesFeed data={session} />
             </div>

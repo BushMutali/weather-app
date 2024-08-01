@@ -2,11 +2,11 @@ import { CiSearch } from "react-icons/ci";
 import { FaCaretUp, FaCaretDown } from "react-icons/fa6";
 import Link from "next/link";
 
-const NavBar = ({cityInput, fetchCities, isOpen, setIsOpen, nearbyCities}) => {
+const NavBar = ({cityInput, fetchCities, isOpen, setIsOpen, nearbyCities, setCityInput}) => {
   return (
-    <div className="flex items-center justify-start font-light text-black mb-10">
-                <div className="relative w-full">
-                    <CiSearch className="text-2xl absolute top-3 left-3" />
+    <div className="flex items-center justify-start font-light text-black mb-3 lg:mb-10 w-full">
+                <div className="relative w-full inline-flex">
+                    <CiSearch className="text-2xl absolute top-3 left-3 hidden lg:block" />
                     <input
                         type="text"
                         name="city"
@@ -14,9 +14,12 @@ const NavBar = ({cityInput, fetchCities, isOpen, setIsOpen, nearbyCities}) => {
                         value={cityInput}
                         onChange={(e) => setCityInput(e.target.value)}
                         placeholder="Search new place.."
-                        className="border-gray-200 outline-none h-[45px] border px-5 pl-10 w-[350px]"
+                        className="border-gray-200 outline-none h-[45px] border px-5 lg:pl-10 pl-2 lg:w-[350px] w-full"
                     />
-                    <button onClick={fetchCities} className="mx-3 h-[45px] w-[100px] bg-gray-700 text-white text-lg hover:bg-primary duration-200 rounded">Search</button>
+                    <button onClick={fetchCities} className="mx-3 h-[45px] lg:w-[100px] w-[50px] bg-gray-700 text-white text-lg hover:bg-primary duration-200 rounded flex items-center justify-center">
+                       <span className="hidden lg:block">Search</span>
+                       <CiSearch className="text-2xl block lg:hidden self-center" />
+                        </button>
                 </div>
 
                 <div className="w-[300px] relative">

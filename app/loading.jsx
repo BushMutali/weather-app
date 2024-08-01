@@ -7,7 +7,7 @@ const PageLoading = () => {
                 <BarLoader
                     color="#0B1215"
                     height={4}
-                    width={500}
+                    width={200}
                 />
             </div>
 

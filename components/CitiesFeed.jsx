@@ -104,7 +104,23 @@ const CitiesFeed = ({ data }) => {
 
   return (
     <>
-      <div className="flex items-baseline justify-start w-full mt-10 relative gap-10">
+      <div className="flex items-center justify-start w-full mt-10 relative gap-10 flex-wrap">
+        {data ? (
+          <>
+            <button onClick={() => setShowForm((prev) => !prev)} className="border border-primary h-[250px] w-[180px] rounded-[30px] overflow-hidden object-contain flex items-center justify-center flex-wrap flex-col gap-3">
+              <CiSquarePlus className='text-4xl text-primary' />
+              <h1 className='text-primary'>Add City</h1>
+            </button>
+
+          </>
+
+        ) : (
+          <Link href="/api/auth/signin" className="border border-primary h-[250px] w-[180px] rounded-[30px] overflow-hidden object-contain  flex items-center justify-center flex-wrap flex-col gap-3">
+            <CiSquarePlus className='text-4xl text-primary' />
+            <h1 className='text-primary'>Add City</h1>
+          </Link>
+        )}
+
         {loaded ? (
           visitorCity && (
             <div className="flex flex-col items-center gap-2">
@@ -135,22 +151,10 @@ const CitiesFeed = ({ data }) => {
         ) : (
           <Loader size={50} color="#1F2858" />
         )}
-        {data ? (
-          <>
-          <button onClick={() => setShowForm((prev) => !prev)} className="border border-primary h-[250px] w-[180px] rounded-[30px] overflow-hidden object-contain absolute right-0 top-0 flex items-center justify-center flex-wrap flex-col gap-3">
-            <CiSquarePlus className='text-4xl text-primary' />
-            <h1 className='text-primary'>Add City</h1>
-          </button>
-          <UserCities />
-          </>
+        {data && (
 
-        ) : (
-          <Link href="/api/auth/signin" className="border border-primary h-[250px] w-[180px] rounded-[30px] overflow-hidden object-contain absolute right-0 top-0 flex items-center justify-center flex-wrap flex-col gap-3">
-            <CiSquarePlus className='text-4xl text-primary' />
-            <h1 className='text-primary'>Add City</h1>
-          </Link>
+          <UserCities />
         )}
-        
       </div>
 
       <div className={`text-white  w-full absolute flex items-start justify-center ${showForm ? 'top-0' : 'top-[-300px]'}  left-0 p-10 z-20 duration-700 transition-all`}>
