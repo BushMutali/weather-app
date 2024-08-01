@@ -20,7 +20,10 @@ const RightSection = () => {
         setUpProviders();
     }, [])
     return (
-        <section className={`lg:p-10 p-8 sm:p-8 md:p-8 bg-oilblack w-full lg:[w-200px] sm:w-full md:w-full h-full lg:min-h-screen text-white ${session ? '' : 'absolute z-20 top-0 left-0 max-h-[100vh]'}`}>
+        <section className={` right_sec 
+            p-8 bg-oilblack w-full lg:h-full  text-white h-full
+            ${session ? 'lg:w-[500px] lg:min-h-screen relative top-0 left-0' : 'absolute z-50 top-0 left-0 min-h-[100vh] w-full lg:w-[600px]'} md:relative sm:relative relative
+          `}>
             {session?.user ? (
                 <div className="flex items-center justify-between gap-3 lg:mb-24 mb-10 sm:mb-10 md:mb-10">
                     <h1 className='text-lg text-white font-medium inline-flex items-center gap-2 tracking-wide'>Notifications <span className='h-[23px] w-[23px] inline-flex items-center justify-center bg-red-500 rounded cursor-pointer'>3</span></h1>
@@ -34,8 +37,9 @@ const RightSection = () => {
                                 className='object-contain'
                             />
                         </Link>
-                        <button onClick={() => { signOut() }} className='h-[50px] w-[50px] bg-red-300 inline-flex items-center justify-center rounded text-2xl hover:bg-red-500 lg:hidden sm:inline-flex md:inline-flex'>
-                            <RiLogoutCircleRFill />
+                        <button onClick={() => { signOut() }} className='h-[50px] w-[50px] md:w-[100px] bg-blue-500 inline-flex items-center justify-center rounded  hover:bg-red-500 lg:hidden sm:inline-flex md:inline-flex'>
+                            <RiLogoutCircleRFill className="text-2xl md:hidden" />
+                            <span className='hidden md:block'>Sign Out</span>
                         </button>
                     </div>
                 </div>
@@ -56,7 +60,7 @@ const RightSection = () => {
             {session?.user && (
 
                 <div className='absolute bottom-14 left-10'>
-                    <button onClick={() => { signOut() }} className='p-2 bg-red-500 w-[200px] h-[45px] rounded lg:inline-flex sm:hidden md:hidden items-center justify-center gap-4 text-lg hover:bg-red-900 transition-all duration-200 hidden '>Logout <RiLogoutCircleRFill /></button>
+                    <button onClick={() => { signOut() }} className='p-2 bg-blue-500 w-[200px] h-[45px] rounded lg:inline-flex sm:hidden md:hidden items-center justify-center gap-4 text-lg hover:bg-red-500 transition-all duration-200 hidden '>Logout <RiLogoutCircleRFill /></button>
                 </div>
             )}
 

@@ -19,6 +19,7 @@ export const POST = async (req) => {
         const newCity = new City({
             creator: userId,
             city,
+            fav: 'no',
         })
 
         await newCity.save();

@@ -9,9 +9,9 @@ const CitySchema = new Schema({
         type: String,
         required: [true, "Prompt is required!"]
     },
-    favorite: {
-        type: Boolean,
-        default: false, 
+    fav: {
+        type: String,
+        required: [true, "Fav is required!"]
     }
 })
 

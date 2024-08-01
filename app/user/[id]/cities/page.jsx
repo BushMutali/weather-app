@@ -71,16 +71,16 @@ const UserCitiesPage = () => {
     return (
         <div className="flex flex-col gap-2 relative">
             {session?.user ? (
-                <h1 className="font-semibold text-5xl text-primary tracking-wider capitalize">
+                <h1 className="font-extralight lg:text-5xl text-lg sm:text-lg text-primary tracking-wider capitalize">
                     {cityName}, 
-                    <span className="font-extralight"> {cityWeather?.sys?.country}</span>
+                    <span className="font-semibold"> {cityWeather?.sys?.country}</span>
                 </h1>
             ) : (
-                <h1 className="font-extralight text-5xl text-primary tracking-wider">
+                <h1 className="font-extralight lg:text-5xl text-lg sm:text-lg md:text-lg text-primary tracking-wider">
                     Weather <span className="font-semibold">Forecast</span>
                 </h1>
             )}
-            <div className="bg-oilblack py-5 h-full w-full min-h-[80vh] absolute object-contain overflow-hidden z-0 top-12 left-0 duration-250 transition-all rounded-lg mt-10">
+            <div className="bg-oilblack py-5 h-full w-full lg:min-h-[80vh] min-h-[50vh] absolute object-contain overflow-hidden z-0 top-12 left-0 duration-250 transition-all rounded-lg lg:mt-10 mt-3">
                 <Image
                     src={imageUrl}
                     alt="city image"

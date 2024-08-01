@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import AddCityForm from './AddCityForm';
 import UserCities from './UserCities';
 
-
 const CitiesFeed = ({ data }) => {
   const router = useRouter();
   const [visitorCity, setVisitorCity] = useState('');
@@ -18,14 +17,11 @@ const CitiesFeed = ({ data }) => {
   const [loaded, setIsLoaded] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [visitorWeather, setVisitorWeather] = useState(null);
-  const [showForm, setShowForm] = useState(false)
-
+  const [showForm, setShowForm] = useState(false);
   const [sending, setSending] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('')
-
-  const [post, setPost] = useState({
-    city: '',
-  });
+  const [errorMessage, setErrorMessage] = useState('');
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [post, setPost] = useState({ city: '' });
 
   const addCity = async (e) => {
     e.preventDefault();
@@ -37,27 +33,30 @@ const CitiesFeed = ({ data }) => {
           city: post.city,
           userId: data?.user.id,
         })
-      })
+      });
 
       if (response.ok) {
         setShowForm(false);
-        router.push('/');
+        setPost({ city: '' });
+        handleCityAdded();
       } else if (response.status === 400) {
-        setErrorMessage('Invalid city name')
-        setPost('');
+        setErrorMessage('Invalid city name');
+        setPost({ city: '' });
       } else if (response.status === 401) {
-        setMessage('You must be logged in to add a city.');
+        setErrorMessage('You must be logged in to add a city.');
       } else if (response.status === 500) {
-        setMessage('Server error. Please try again later.');
+        setErrorMessage('Server error. Please try again later.');
       }
-
     } catch (error) {
       console.log(error);
     } finally {
       setSending(false);
     }
-  }
+  };
 
+  const handleCityAdded = () => {
+    setRefreshTrigger((prev) => prev + 1);
+  };
 
   useEffect(() => {
     const fetchVisitorLocation = async () => {
@@ -66,7 +65,6 @@ const CitiesFeed = ({ data }) => {
         const locationData = await res.json();
         setVisitorCity(locationData.city);
         setVisitorCountry(locationData.country);
-
 
         if (locationData.city) {
           const weatherRes = await fetch(`/api/weather/cities?cities=${locationData.city}`);
@@ -111,11 +109,9 @@ const CitiesFeed = ({ data }) => {
               <CiSquarePlus className='text-4xl text-primary' />
               <h1 className='text-primary'>Add City</h1>
             </button>
-
           </>
-
         ) : (
-          <Link href="/api/auth/signin" className="border border-primary h-[250px] w-[180px] rounded-[30px] overflow-hidden object-contain  flex items-center justify-center flex-wrap flex-col gap-3">
+          <Link href="/api/auth/signin" className="border border-primary h-[250px] w-[180px] rounded-[30px] overflow-hidden object-contain flex items-center justify-center flex-wrap flex-col gap-3">
             <CiSquarePlus className='text-4xl text-primary' />
             <h1 className='text-primary'>Add City</h1>
           </Link>
@@ -124,8 +120,9 @@ const CitiesFeed = ({ data }) => {
         {loaded ? (
           visitorCity && (
             <div className="flex flex-col items-center gap-2">
-              <Link href={`user/${data?.user.id || '/'}/cities/?city=${visitorCity}`} className="bg-white h-[250px] w-[180px] rounded-[20px] overflow-hidden object-contain relative hover:shadow">
-                <div className="absolute hover:bg-opacity-70  bg-opacity-0 w-full h-full bg-black z-0 top-0 left-0 text-white flex  transition-all duration-250">
+              <Link href={data ? `/user/${data?.user.id}/cities/?city=${visitorCity}` : '/'}
+                className="bg-white h-[250px] w-[180px] rounded-[20px] overflow-hidden object-contain relative hover:shadow">
+                <div className="absolute hover:bg-opacity-70 bg-opacity-0 w-full h-full bg-black z-0 top-0 left-0 text-white flex transition-all duration-250">
                   <div className="flex flex-col items-center justify-center gap-3 absolute h-full w-full">
                     <h1 className='text-4xl'>{(visitorWeather.main?.temp - 273.15)?.toFixed(0)}&deg;C</h1>
                   </div>
@@ -151,13 +148,11 @@ const CitiesFeed = ({ data }) => {
         ) : (
           <Loader size={50} color="#1F2858" />
         )}
-        {data && (
 
-          <UserCities />
-        )}
+        {data && <UserCities refreshTrigger={refreshTrigger} />}
       </div>
 
-      <div className={`text-white  w-full absolute flex items-start justify-center ${showForm ? 'top-0' : 'top-[-300px]'}  left-0 p-10 z-20 duration-700 transition-all`}>
+      <div className={`text-white w-full absolute flex items-start justify-center ${showForm ? 'top-0' : 'top-[-300px]'} left-0 p-10 z-20 duration-700 transition-all`}>
         <div className="bg-primary rounded-xl shadow-lg p-8 text-text w-[500px] relative">
           <IoCloseCircle onClick={() => setShowForm((prev) => !prev)} className='absolute right-3 top-3 text-2xl text-white cursor-pointer' />
           <AddCityForm
@@ -168,7 +163,6 @@ const CitiesFeed = ({ data }) => {
             handleSubmit={addCity}
             errorMessage={errorMessage}
           />
-
         </div>
       </div>
     </>

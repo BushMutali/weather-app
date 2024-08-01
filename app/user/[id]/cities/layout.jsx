@@ -6,11 +6,12 @@ const UserCitiesPageLayout = ({children}) => {
   return (
     <SessionProviderWrapper>
 
-    <section className="flex items-start justify-between">
-    <section className='p-10 bg-white min-h-screen w-full px-[100px] flex flex-col gap-4'>
+    <section className="flex items-start justify-between flex-col lg:flex-row sm-flex-col md:flex-col h-full">
+    <RightSection/>
+    <section className='lg:p-10 sm:p-4 md:p-4 p-4 bg-white min-h-screen w-full lg:px-[100px] flex flex-col gap-4'>
         {children}
     </section>
-        <RightSection/>
+        
     </section>
   </SessionProviderWrapper>
   )

@@ -5,8 +5,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
 import axios from "axios";
+import { FaRegStar,FaStar } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
-const UserCities = () => {
+const UserCities = ({ refreshTrigger }) => {
   const [userCities, setUserCities] = useState([]);
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
@@ -21,20 +23,20 @@ const UserCities = () => {
         const data = await response.json();
         setUserCities(data);
         if (data.length > 0) {
-            // fetch weather for each city
-            const weatherRequests = data.map(city =>
-              fetch(`/api/weather/cities?cities=${city.city}`).then(res => res.json())
-            );
-  
-            const weatherResponses = await Promise.all(weatherRequests);
-            const weatherMap = weatherResponses.reduce((acc, weatherData, index) => {
-              acc[data[index].city] = weatherData[0]?.data || null;
-              return acc;
-            }, {});
-            
-            setCityWeather(weatherMap);
-            
-            // Fetch images for each city
+          // fetch weather for each city
+          const weatherRequests = data.map(city =>
+            fetch(`/api/weather/cities?cities=${city.city}`).then(res => res.json())
+          );
+
+          const weatherResponses = await Promise.all(weatherRequests);
+          const weatherMap = weatherResponses.reduce((acc, weatherData, index) => {
+            acc[data[index].city] = weatherData[0]?.data || null;
+            return acc;
+          }, {});
+
+          setCityWeather(weatherMap);
+
+          // Fetch images for each city
           const imageRequests = data.map(city =>
             axios.get('/api/cities/images', { params: { visitorCity: city.city } })
           );
@@ -46,7 +48,7 @@ const UserCities = () => {
           }, {});
 
           setCityImages(imageMap);
-          }
+        }
       } catch (error) {
         console.error("Failed to fetch cities", error);
       } finally {
@@ -55,7 +57,29 @@ const UserCities = () => {
     };
 
     if (session?.user.id) fetchUserCities();
-  }, [session?.user.id]);
+  }, [session?.user.id, refreshTrigger]);
+
+  const toggleFavourite = async (cityId, newFav) => {
+    try {
+      const response = await fetch(`/api/city/${cityId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ fav: newFav }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        setUserCities(prevCities => 
+          prevCities.map(city => 
+            city._id === cityId ? { ...city, fav: newFav } : city
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Failed to update favourite status", error);
+    }
+  };
 
   return (
     <>
@@ -64,12 +88,12 @@ const UserCities = () => {
       ) : (
         userCities.length > 0 &&
         userCities.map((city) => (
-          <div key={city._id} className="flex flex-col items-center gap-2">
+          <div key={city._id} className="flex flex-col items-center gap-2 relative">
             <Link href={`/user/${session?.user.id}/cities/?city=${city.city}`} className="bg-white h-[220px] w-[180px] rounded-[20px] overflow-hidden object-contain relative hover:shadow">
               <div className="absolute hover:bg-opacity-50 bg-opacity-0 w-full h-full bg-black z-0 top-0 left-0 text-white flex transition-all duration-250">
                 <div className="flex flex-col items-center justify-center gap-3 absolute h-full w-full">
                   <h1 className='text-4xl'>
-                  {cityWeather[city.city]?.main?.temp
+                    {cityWeather[city.city]?.main?.temp
                       ? (cityWeather[city.city].main.temp - 273.15)?.toFixed(0)
                       : 'N/A'}&deg;C
                   </h1>
@@ -84,10 +108,17 @@ const UserCities = () => {
                 priority
               />
             </Link>
-            <h1 className="font-light text-lg text-primary capitalize">
-              {city.city}, {cityWeather[city.city]?.sys?.country || 'N/A'}
+            <h1 className="font-light text-lg text-primary capitalize inline-flex items-center justify-start gap-2 w-full">
+              {city.city}, {cityWeather[city.city]?.sys?.country} <MdDelete className="flex-auto text-xl cursor-pointer hover:text-red-600 duration-250" />
             </h1>
+            {city.fav === 'yes' ? (
+
+              <FaStar onClick={() => toggleFavourite(city._id, 'no')} className="absolute top-[-20px] right-0 text-xl cursor-pointer" />
+            ) : (
+              <FaRegStar onClick={() => toggleFavourite(city._id, 'yes')} className="absolute top-[-20px] right-0 text-xl cursor-pointer" />
+            )}
           </div>
+          
         ))
       )}
     </>
