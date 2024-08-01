@@ -9,7 +9,7 @@ const HomePage = () => {
    if (status === "loading") return <PageLoading/>;
   return (
 
-      <section className="flex items-start justify-between flex-col lg:flex-row sm-flex-col md:flex-col">
+      <section className="flex items-start justify-between flex-col lg:flex-row sm-flex-col md:flex-col relative">
         <RightSection/>
         <LeftSection />
       </section>
