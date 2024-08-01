@@ -1,4 +1,5 @@
 import '@styles/globals.css';
+import SessionProviderWrapper from '@components/SessionProviderWrapper';
 
 export const metadata = {
   title: "The Weather App",
@@ -8,7 +9,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className='antialiased'>
+        <SessionProviderWrapper>
+          {children}
+        </SessionProviderWrapper>
+      </body>
     </html>
   );
 }
