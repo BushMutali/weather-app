@@ -28,10 +28,10 @@ const UserCitiesPage = () => {
     useEffect(() => {
 
        if (status === "loading") return;
-    //    if (!session) {
-    //        router.push('/');
-    //        return;
-    //    }
+       if (!session) {
+           router.push('/');
+           return;
+       }
 
         const fetchCityWeather = async () => {
             try {
