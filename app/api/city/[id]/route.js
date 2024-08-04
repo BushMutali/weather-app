@@ -25,10 +25,7 @@ export const PATCH = async (request, { params }) => {
 
         const existingCity = await City.findById(params.id);
         if (!existingCity) return new Response("City not found", { status: 404 });
-        console.log("Existing: ", existingCity.fav);
-
         existingCity.fav = fav;
-        console.log("New: ", fav);
         await existingCity.save();
 
         return new Response(JSON.stringify(existingCity), { status: 200 });
@@ -37,3 +34,13 @@ export const PATCH = async (request, { params }) => {
         return new Response("Failed to update the city", { status: 500 });
     }
 };
+
+export const DELETE = async (request, { params }) => {
+    try {
+        await connectToDB();
+        await City.findByIdAndDelete(params.id)
+        return new Response("City deleted successfully", { status: 200 })
+    } catch (error) {
+        return new Response("Failed to delete city", { status: 500 })
+    }
+}

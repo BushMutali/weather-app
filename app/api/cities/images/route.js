@@ -17,7 +17,7 @@ export async function GET(req) {
   try {
     const response = await axios.get(url, {
       params: {
-        query: `${visitorCity} city at night`,
+        query: `${visitorCity} city`,
         client_id: unsplashAccessKey,
         per_page: 1,
       },

@@ -4,62 +4,82 @@
 
 
 @font-face {
-    font-family: 'Sofia Pro';
-    src: url('/fonts/sofia-pro-black.otf') format('opentype');
-    font-weight: 900;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Sofia Pro';
-    src: url('/fonts/sofia-pro-semi-bold.otf') format('opentype');
-    font-weight: 600;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Sofia Pro';
-    src: url('/fonts/sofia-pro-regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Sofia Pro';
-    src: url('/fonts/sofia-pro-medium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Sofia Pro';
-    src: url('/fonts/sofia-pro-light.otf') format('opentype');
-    font-weight: 300;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Sofia Pro';
-    src: url('/fonts/sofia-pro-extra-light.otf') format('opentype');
-    font-weight: 200;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Sofia Pro';
-    src: url('/fonts/sofia-pro-bold.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Sofia Pro';
-    src: url('/fonts/sofia-pro-ultra-light.otf') format('opentype');
-    font-weight: 100;
-    font-style: normal;
+  font-family: 'Sofia Pro';
+  src: url('/fonts/sofia-pro-black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sofia Pro';
+  src: url('/fonts/sofia-pro-semi-bold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sofia Pro';
+  src: url('/fonts/sofia-pro-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sofia Pro';
+  src: url('/fonts/sofia-pro-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sofia Pro';
+  src: url('/fonts/sofia-pro-light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sofia Pro';
+  src: url('/fonts/sofia-pro-extra-light.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sofia Pro';
+  src: url('/fonts/sofia-pro-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sofia Pro';
+  src: url('/fonts/sofia-pro-ultra-light.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Sofia Pro', sans-serif;
+}
+
+.loading {
+  border: 2px solid #f3f3f3;
+  /* Light grey */
+  border-top: 2px solid #3498db;
+  /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
 
-  body {
-    font-family: 'Sofia Pro', sans-serif;
+  100% {
+    transform: rotate(360deg);
   }
-  
+}

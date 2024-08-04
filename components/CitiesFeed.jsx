@@ -117,37 +117,6 @@ const CitiesFeed = ({ data }) => {
           </Link>
         )}
 
-        {loaded ? (
-          visitorCity && (
-            <div className="flex flex-col items-center gap-2">
-              <Link href={data ? `/user/${data?.user.id}/cities/?city=${visitorCity}` : '/'}
-                className="bg-white h-[250px] w-[180px] rounded-[20px] overflow-hidden object-contain relative hover:shadow">
-                <div className="absolute hover:bg-opacity-70 bg-opacity-0 w-full h-full bg-black z-0 top-0 left-0 text-white flex transition-all duration-250">
-                  <div className="flex flex-col items-center justify-center gap-3 absolute h-full w-full">
-                    <h1 className='text-4xl'>{(visitorWeather.main?.temp - 273.15)?.toFixed(0)}&deg;C</h1>
-                  </div>
-                </div>
-                {imageUrl ? (
-                  <Image
-                    src={imageUrl}
-                    alt={`Image of ${visitorCity}`}
-                    width={2520}
-                    height={1324}
-                    className="object-cover w-full h-full"
-                    priority
-                  />
-                ) : (
-                  <Loader size={50} color="#1F2858" />
-                )}
-              </Link>
-              <h1 className="font-light text-lg text-primary">
-                {visitorCity}, {visitorCountry}
-              </h1>
-            </div>
-          )
-        ) : (
-          <Loader size={50} color="#1F2858" />
-        )}
 
         {data && <UserCities refreshTrigger={refreshTrigger} />}
       </div>
