@@ -61,7 +61,7 @@ const LoginPage = () => {
                   className=" h-[50px] w-[50px] rounded-full object-contain inline-flex items-center shadow"
                 >
                   <Image
-                    src={`/assets/images/${provider.name}.svg`}
+                    src={`/assets/images/${(provider.name).toLocaleLowerCase()}.svg`}
                     alt={provider.name}
                     width={50}
                     height={50}
